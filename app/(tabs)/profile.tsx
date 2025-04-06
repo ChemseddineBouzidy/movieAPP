@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-const profiles = () => {
+const profile = () => {
   return (
     <View>
       <Text>profiles</Text>
@@ -9,6 +9,6 @@ const profiles = () => {
   )
 }
 
-export default profiles
+export default profile
 
 const styles = StyleSheet.create({})
