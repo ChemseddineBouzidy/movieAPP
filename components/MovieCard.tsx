@@ -17,7 +17,7 @@ const MovieCard = ({ id, poster_path, title, vote_average, release_date }: Movie
                     resizeMode='cover'
                 />
 
-                <Text className="text-sm font-bold text-white mt-2">{title}</Text>
+                <Text className="text-sm font-bold text-white mt-2" numberOfLines={1}>{title}</Text>
                 <View className='flex-row items-center justify-start gap-x-1'>
                     <Image
                         source={icons.star}
@@ -31,7 +31,9 @@ const MovieCard = ({ id, poster_path, title, vote_average, release_date }: Movie
                     <Text  className="text-xs text-light-300 font-medium mt-1">
                         {release_date?.split('-')[0]}
                     </Text>
-                    
+                    {/* <Text className='text-xs font-medium text-light-300 uppercase'>
+                        Movie
+                    </Text> */}
                 </View>
 
 

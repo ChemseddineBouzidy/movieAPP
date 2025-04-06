@@ -12,7 +12,7 @@ export default function Index() {
     data: movies,
     loading: moviesLoading,
     error: moviesError } = useFetch(() => fetchMovies({
-      query: ""
+      query: "",
     }))
 
   return (
