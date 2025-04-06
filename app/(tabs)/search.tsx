@@ -7,6 +7,7 @@ import { fetchMovies } from '@/services/api'
 import { useRouter } from 'expo-router'
 import { icons } from '@/constants/icons'
 import SearchBar from '@/components/SearchBar'
+import { updateSearchCount } from '@/services/appwrite'
 
 const search = () => {
   const [searchQuery, setSearchQuery] = useState("")
@@ -18,19 +19,21 @@ const search = () => {
     reset,
   } = useFetch(() => fetchMovies({
     query: searchQuery,
-  }),false)
+  }), false)
   useEffect(() => {
-    const timeoutId =setTimeout(async () => {
-    if (searchQuery.trim()) {
-      await loadMovies();
-    }
-    else {
-      reset();
-    }
-  },500)
-    return () => {
-      clearTimeout(timeoutId);
-    }
+    // updateSearchCount(searchQuery, movies[0]);
+    const timeoutId = setTimeout(async () => {
+      if (searchQuery.trim()) {
+        await loadMovies();
+        if (movies?.length > 0 && movies?.[0]) 
+          await updateSearchCount(searchQuery, movies[0]);
+
+        } else {
+          reset();
+        }
+      }, 500)
+    return () => clearTimeout(timeoutId);
+    
     // func();
   }, [searchQuery]);
   return (
@@ -91,14 +94,14 @@ const search = () => {
           </>
         }
         ListEmptyComponent={
-          !moviesLoading && !moviesError ?  (
+          !moviesLoading && !moviesError ? (
             <View className="mt-10 px-5">
               {/* <Image source={icons.empty} className="w-24 h-24" /> */}
-            <Text className="text-gray-500 text-center ">
-              {searchQuery.trim() ? "No movies found" : "Search for movie"}
-            </Text>
+              <Text className="text-gray-500 text-center ">
+                {searchQuery.trim() ? "No movies found" : "Search for movie"}
+              </Text>
             </View>
-          ): null
+          ) : null
         }
 
 
