@@ -18,17 +18,20 @@ const search = () => {
     reset,
   } = useFetch(() => fetchMovies({
     query: searchQuery,
-  }))
+  }),false)
   useEffect(() => {
-    const func = async () => {
+    const timeoutId =setTimeout(async () => {
     if (searchQuery.trim()) {
       await loadMovies();
     }
     else {
       reset();
     }
-  }
-    func();
+  },500)
+    return () => {
+      clearTimeout(timeoutId);
+    }
+    // func();
   }, [searchQuery]);
   return (
 
@@ -86,6 +89,16 @@ const search = () => {
               </Text>
             )}
           </>
+        }
+        ListEmptyComponent={
+          !moviesLoading && !moviesError ?  (
+            <View className="mt-10 px-5">
+              {/* <Image source={icons.empty} className="w-24 h-24" /> */}
+            <Text className="text-gray-500 text-center ">
+              {searchQuery.trim() ? "No movies found" : "Search for movie"}
+            </Text>
+            </View>
+          ): null
         }
 
 
